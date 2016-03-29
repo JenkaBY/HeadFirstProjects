@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Exercise01</string>
+    <string name="text_hello">Thanks for choosing our awesome blend tea. How do you want it serving</string>
+    <string name="text_temperature">Temperature:</string>
+    <string name="text_buttonOnHot">HOT</string>
+    <string name="text_buttonOffCold">COLD</string>
+    <string name="text_checkbox_milk">Milk</string>
+    <string name="text_checkbox_sugar">Sugar</string>
+    <string name="text_checkbox_lemon">Lemon</string>
+
+</resources>

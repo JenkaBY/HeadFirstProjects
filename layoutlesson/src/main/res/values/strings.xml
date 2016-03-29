@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LayoutLesson</string>
+    <string name="to">To</string>
+    <string name="to_hint">Enter Email address</string>
+    <string name="message">Message</string>
+    <string name="button_send">Send</string>
+</resources>

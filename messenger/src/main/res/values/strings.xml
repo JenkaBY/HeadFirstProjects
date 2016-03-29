@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Messenger</string>
+    <string name="send_message">Send Message</string>
+    <string name="title_activity_receive_message">Receive Message</string>
+    <string name="button_send_another">Send</string>
+    <string name="text_big">Some text here...</string>
+    <string name="type_here">Type text here...</string>
+    <string name="chooser"> Send message...</string>
+</resources>
