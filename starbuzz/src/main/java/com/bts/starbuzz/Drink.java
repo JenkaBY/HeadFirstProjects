@@ -7,9 +7,10 @@ public class Drink {
     private String name;
     private String description;
     private int imageResourceId;
-    private static final Drink[] drinks = {new Drink("Latte",
-            "A couple of espresso shots with steamed milk", R.drawable.latte),
+    public static final Drink[] drinks = {
             new Drink("Latte",
+            "A couple of espresso shots with steamed milk", R.drawable.latte),
+            new Drink("Cappuccino",
                     "Cappuccino, hot milk, and a steamed milk foam", R.drawable.cappuccino),
             new Drink("Filter",
                     "Highest quality beans roasted and brewed fresh", R.drawable.filter)};
@@ -20,9 +21,8 @@ public class Drink {
         this.imageResourceId = imageResourceId;
     }
     public String getName(){ return name;}
-    public String getDescription(){ return name;}
+    public String getDescription(){ return description;}
     public int getImageResourceId(){return imageResourceId;}
-
     public String toString(){return this.name;}
 
 }
