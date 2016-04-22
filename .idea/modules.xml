@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/messenger/messenger.iml" filepath="$PROJECT_DIR$/messenger/messenger.iml" />
       <module fileurl="file://$PROJECT_DIR$/starbuzz/starbuzz.iml" filepath="$PROJECT_DIR$/starbuzz/starbuzz.iml" />
       <module fileurl="file://$PROJECT_DIR$/stopwatch/stopwatch.iml" filepath="$PROJECT_DIR$/stopwatch/stopwatch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workout/workout.iml" filepath="$PROJECT_DIR$/workout/workout.iml" />
     </modules>
   </component>
 </project>
