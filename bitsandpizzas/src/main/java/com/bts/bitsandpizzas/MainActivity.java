@@ -30,12 +30,14 @@ public class MainActivity extends Activity {
     private String[] titles;
     private ListView drawerList;
     private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+    private int currentPosition = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         titles = getResources().getStringArray(R.array.titles);
-        drawerList = (ListView)findViewById(R.id.drawer);
+        drawerList = (ListView) findViewById(R.id.drawer);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         //Populate the ListView
         drawerList.setAdapter(new ArrayAdapter<String>(this,
@@ -43,14 +45,57 @@ public class MainActivity extends Activity {
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
         //Display the correct fragment.
         if (savedInstanceState != null) {
-            selectItem(0);
-        }
+            currentPosition = savedInstanceState.getInt("position");
+            setActionBarTitle(currentPosition);
+        } else selectItem(0);
+
+        drawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                R.string.open_drawer,
+                R.string.close_drawer) {
+            @Override
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerview) {
+                super.onDrawerOpened(drawerview);
+                invalidateOptionsMenu();
+            }
+        };
+        drawerLayout.setDrawerListener(drawerToggle);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener(){
+            public void onBackStackChanged(){
+                FragmentManager fragMan = getFragmentManager();
+                Fragment fragment = fragMan.findFragmentByTag("visible_fragment");
+                if (fragment instanceof TopFragment){
+                    currentPosition=0;
+                }
+                if (fragment instanceof PizzaFragment){
+                    currentPosition=1;
+                }
+                if (fragment instanceof PastaFragment){
+                    currentPosition=2;
+                }
+                if (fragment instanceof StoresFragment){
+                    currentPosition=3;
+                }
+                setActionBarTitle(currentPosition);
+                drawerList.setItemChecked(currentPosition,true);
+            }
+        });
     }
 
     private void selectItem(int position) {
+        currentPosition = position;
         // update the main content by replacing fragments
         Fragment fragment;
-        switch(position) {
+        switch (position) {
             case 1:
                 fragment = new PizzaFragment();
                 break;
@@ -72,6 +117,19 @@ public class MainActivity extends Activity {
         setActionBarTitle(position);
         //Close drawer
         drawerLayout.closeDrawer(drawerList);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("position", currentPosition);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean drawerOpen = drawerLayout.isDrawerOpen(drawerList);
+        menu.findItem(R.id.action_share).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
     }
 
 
@@ -103,7 +161,27 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Синхронизировать состояние выключателя после onRestoreInstanceState
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Добавьте этот метод в активность,
+        // чтобы сведения о любых изменениях в конфигурации передавались ActionBarDrawerToggle.
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         switch (item.getItemId()) {
             case R.id.action_create_order:
                 //Code to run when the Create Order item is clicked
