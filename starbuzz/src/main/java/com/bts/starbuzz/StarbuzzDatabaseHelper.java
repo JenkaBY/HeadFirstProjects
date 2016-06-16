@@ -24,15 +24,21 @@ public class StarbuzzDatabaseHelper extends SQLiteOpenHelper {
 
     private void updateMydatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {
-            String sql = "CREATE TABLE " + TB_DRINK +
-                    "(_id INTEGER PRIMARY AUTOINCREMENT, NAME TEXT,DESCRIPTION TEXT, IMAGE_RESOURCES_ID INTEGER);";
+            String sql =
+                    "CREATE TABLE "
+                    + TB_DRINK
+                    + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "NAME TEXT,DESCRIPTION TEXT, "
+                    + "IMAGE_RESOURCES_ID INTEGER);";
             db.execSQL(sql);
             insertDrink(db, "Latte", "Espresso and steamed milk", R.drawable.latte);
-            insertDrink(db, "Cappuccino", "Espress, hot milk and steamed-milk foam", R.drawable.cappuccino);
+            insertDrink(db, "Cappuccino", "Espresso, hot milk and steamed-milk foam", R.drawable.cappuccino);
             insertDrink(db, "Filter", "Our best drip coffee", R.drawable.filter);
         }
         if (oldVersion < 2) {
-            String sqlInsertColumn = "ALTER TABLE " + TB_DRINK + " COLUMN FAVORITE NUMERIC;";
+            String sqlInsertColumn = "ALTER TABLE "
+                                    + TB_DRINK
+                                    + " ADD COLUMN FAVORITE NUMERIC;";
             db.execSQL(sqlInsertColumn);
         }
     }

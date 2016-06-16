@@ -31,7 +31,7 @@ public class DrinkCategoryActivity extends ListActivity {
                     cursor, new String[]{"NAME"}, new int[]{android.R.id.text1}, 0);
             listDrinks.setAdapter(listAdapter);
         } catch (SQLiteException e) {
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Database unavailable DrinkCategoryActivity", Toast.LENGTH_SHORT);
             toast.show();
         }
 //        ArrayAdapter listAdapter =
