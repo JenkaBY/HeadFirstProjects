@@ -6,18 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v4.print.PrintHelper;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class TopLevelActivity extends Activity {
@@ -78,7 +72,7 @@ public class TopLevelActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> listView, View v, int position, long id) {
                 Intent intent = new Intent(TopLevelActivity.this, DrinkActivity.class);
-                intent.putExtra(DrinkActivity.EXTRA_DRINKO, (int) id);
+                intent.putExtra(DrinkActivity.EXTRA_DRINKNO, (int) id);
                 startActivity(intent);
             }
         });

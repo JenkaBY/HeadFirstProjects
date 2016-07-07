@@ -5,11 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v7.app.AppCompatActivity;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -42,7 +40,7 @@ public class DrinkCategoryActivity extends ListActivity {
     @Override
     public void onListItemClick(ListView listView, View itemView, int position, long id) {
         Intent intent = new Intent(this, DrinkActivity.class);
-        intent.putExtra(DrinkActivity.EXTRA_DRINKO, (int) id);
+        intent.putExtra(DrinkActivity.EXTRA_DRINKNO, (int) id);
         startActivity(intent);
     }
 
