@@ -125,10 +125,11 @@ public class DrinkActivity extends AppCompatActivity {
     }
 
     private class OnCreateTask extends AsyncTask<Integer, Void, Boolean> {
-        Cursor cursor;
-        SQLiteDatabase db;
+        //Cursor cursor;
+        //
+        ContentValues cursorValues;
         //SQLiteOpenHelper starbuzzDatabaseHelper;
-
+        SQLiteDatabase db;
         //protected void onPreExecute() {
         //}
 
@@ -137,12 +138,28 @@ public class DrinkActivity extends AppCompatActivity {
             int drinkNo = drinks[0];
             SQLiteOpenHelper starbuzzDatabaseHelper = new StarbuzzDatabaseHelper(DrinkActivity.this);
             try {
+
+                Cursor cursor;
                 db = starbuzzDatabaseHelper.getReadableDatabase();
                 cursor = db.query(
                         DB_NAME,
                         new String[]{NAME, DESCRIPTION, IMAGE_RESOURCE_ID, FAVORITE}, "_id = ?",
                         new String[]{Integer.toString(drinkNo)},
                         null, null, null);
+                if (cursor.moveToFirst()) {
+                    /*
+                    String nameText = cursor.getString(0);
+                    String descriptionText = cursor.getString(1);
+                    int photoId = cursor.getInt(2);
+                    boolean isFavorite = cursor.getInt(3) == 1;
+                    */
+                    cursorValues.put(NAME,cursor.getString(0));
+                    cursorValues.put(DESCRIPTION,cursor.getString(1));
+                    cursorValues.put(IMAGE_RESOURCE_ID,cursor.getInt(2));
+                    cursorValues.put(FAVORITE,cursor.getInt(3) == 1);
+                }
+                cursor.close();
+                //db.close();
                 return true;
             } catch (SQLiteException e) {
                 return false;
@@ -152,17 +169,18 @@ public class DrinkActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean success) {
             if (!success) {
                 Toast toast = Toast.makeText(DrinkActivity.this,
-                        "Database unavailable FavoriteClicked", Toast.LENGTH_SHORT);
+                        "Database unavailable onCreateTask", Toast.LENGTH_SHORT);
                 toast.show();
-                cursor.close();
+                //cursor.close();
                 db.close();
             } else {
-                if (cursor != null) {
-                    if (cursor.moveToFirst()) {
-                        String nameText = cursor.getString(0);
-                        String descriptionText = cursor.getString(1);
-                        int photoId = cursor.getInt(2);
-                        boolean isFavorite = cursor.getInt(3) == 1;
+                if (cursorValues != null) {
+                    //if (cursor.moveToFirst()) {
+
+                        String nameText =(String) cursorValues.get(NAME);
+                        String descriptionText = (String) cursorValues.get(DESCRIPTION);
+                        int photoId =(Integer) cursorValues.get(IMAGE_RESOURCE_ID);
+                        boolean isFavorite = (Boolean) cursorValues.get(FAVORITE);
 
                         ImageView photo = (ImageView) findViewById(R.id.photo);
                         photo.setImageResource(photoId);
@@ -176,8 +194,9 @@ public class DrinkActivity extends AppCompatActivity {
 
                         CheckBox favorite = (CheckBox) findViewById(R.id.checkbox_favorite);
                         favorite.setChecked(isFavorite);
-                    }
-                    cursor.close();
+
+                    //}
+                    //cursor.close();
                     db.close();
                 }
             }
